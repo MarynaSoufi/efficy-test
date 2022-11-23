@@ -27,38 +27,41 @@ const oppoStatus = [
 ];
 
 const FormComponent = class {
+  selector = document.getElementsByName('status')[0];
+  input = document.getElementsByName('success')[0];
+  submitBtn = document.querySelector('button');
+  output = document.querySelector('.output');
+
   constructor() {
-    const select = document.getElementById('status');
+    this.input.setAttribute('readonly', true);
 
     oppoStatus.forEach((status) => {
       let option = document.createElement('option');
       option.value = status.K_OPPO_STATUS;
       option.innerText = status.STATUS;
-      select.appendChild(option);
+      this.selector.appendChild(option);
     });
   }
   start() {
-    const select = document.getElementById('status');
-    select.addEventListener('change', function (item) {
-      console.log(item);
-      const selectedOption = oppoStatus.find(
-        (s) => s.K_OPPO_STATUS === +item.target.value
-      );
-      console.log(selectedOption);
-      const input = document.getElementById('success');
-      input.value = selectedOption.SUCCESS;
+    this.selector.addEventListener('change', (item) => {
+      const selectedOption = this.getInfoByStatus(item.target.value);
+      this.input.value = selectedOption.SUCCESS;
     });
 
-    const btn = document.getElementById('btn');
-    const output = document.querySelector('.output');
-    btn.addEventListener('click', function (e) {
-      const selectedOption = oppoStatus.find(
-        (s) => s.K_OPPO_STATUS === +select.value
-      );
-      output.innerText = JSON.stringify(selectedOption);
+    this.submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const selectedOption = this.getInfoByStatus(this.selector.value);
+
+      this.output.innerText = JSON.stringify({
+        status: selectedOption.K_OPPO_STATUS,
+        success: selectedOption.SUCCESS,
+      });
     });
-    // Start modifying the form elements here!
-    // You are allowed to add extra methods, properties or change the constructor of this class
+  }
+
+  getInfoByStatus(status) {
+    return oppoStatus.find((s) => s.K_OPPO_STATUS === +status);
   }
 };
 
