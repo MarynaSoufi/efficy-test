@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src='index.js' defer async></script>
   <title>Document</title>
 </head>
 
 <body>
   <form>
-    <select name="status"></select>
-    <input name="success" type="number" min=0 max=100 step=1 value="0">
-    <button type="submit">Submit</button>
+    <select id="status" name="status"></select>
+    <input id='success' name="success" type="number" min=0 max=100 step=1 value="0">
+    <button id='btn' type="button">Submit</button>
   </form>
   <div class="output">Waiting for form submit...</div>
 </body>

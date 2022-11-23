@@ -27,8 +27,36 @@ const oppoStatus = [
 ];
 
 const FormComponent = class {
-  constructor() {}
+  constructor() {
+    const select = document.getElementById('status');
+
+    oppoStatus.forEach((status) => {
+      let option = document.createElement('option');
+      option.value = status.K_OPPO_STATUS;
+      option.innerText = status.STATUS;
+      select.appendChild(option);
+    });
+  }
   start() {
+    const select = document.getElementById('status');
+    select.addEventListener('change', function (item) {
+      console.log(item);
+      const selectedOption = oppoStatus.find(
+        (s) => s.K_OPPO_STATUS === +item.target.value
+      );
+      console.log(selectedOption);
+      const input = document.getElementById('success');
+      input.value = selectedOption.SUCCESS;
+    });
+
+    const btn = document.getElementById('btn');
+    const output = document.querySelector('.output');
+    btn.addEventListener('click', function (e) {
+      const selectedOption = oppoStatus.find(
+        (s) => s.K_OPPO_STATUS === +select.value
+      );
+      output.innerText = JSON.stringify(selectedOption);
+    });
     // Start modifying the form elements here!
     // You are allowed to add extra methods, properties or change the constructor of this class
   }
